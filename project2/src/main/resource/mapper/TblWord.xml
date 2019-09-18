@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.mapper.WordMapper">
+	<select id="findword" parameterType="java.util.HashMap" resultType="com.soft.entity.UserUp">
+		select * from tblmyword w,tblstate s,tbltype t
+		where w.wtype=t.typeid and  w.wstate=s.stateid
+		<if test="userid!=null and userid neq ''">
+			and w.userid like "%"#{userid}"%"
+		</if>
+		<if test="title!=null and title neq ''">
+			and w.wtitle like "%"#{title}"%"
+		</if>
+		<if test=" (ftime !=null and ftime neq '') and ( ltime !=null and ltime neq '')">
+			and w.wtime between #{ftime} '00:00:00' and #{ltime} '24:00:00'
+		</if>
+		limit #{start},#{end}
+	</select>
+	<!--<resultMap id="resword" type="com.soft.entity.UserUp">
+		<id property="id" column="id"/>
+		<result property="userid" column="userid"/>
+		<result property="wtitle" column="wtitle"/>
+		<result property="wtime" column="wtime"/>
+		<result property="wtype" column="wtype"/>
+		<result property="wabout" column="wabout"/>
+		<result property="wrednum" column="wrednum"/>
+		<association property="type" column="type" javaType="com.soft.entity.Type">
+			<id property="typeid" column="typeid"/>
+			<result property="typename" column="typename" />
+			<result property="typejf" column="typejf" />
+		</association>
+		<association property="state" column="state" javaType="com.soft.entity.State">
+			<id property="stateid" column="stateid"/>
+			<result property="statename" column="statename" />
+		</association>
+	</resultMap>-->
+
+	<select id="wordpage" parameterType="java.util.HashMap" resultMap="wpage">
+		select * from tblmyword w,tblstate s,tbltype t
+		where w.wtype=t.typeid and  w.wstate=s.stateid
+		<if test="userid!=null and userid neq ''">
+			and w.userid like "%"#{userid}"%"
+		</if>
+		<if test="title!=null and title neq ''">
+			and w.wtitle like "%"#{title}"%"
+		</if>
+		<if test=" (ftime !=null and ftime neq '') and ( ltime !=null and ltime neq '')">
+			and w.wtime between #{ftime} '00:00:00' and #{ltime} '24:00:00'
+		</if>
+	</select>
+	<resultMap id="wpage" type="com.soft.entity.UserUp">
+		<id property="id" column="id"/>
+		<result property="userid" column="userid"/>
+		<result property="wtitle" column="wtitle"/>
+		<result property="wtime" column="wtime"/>
+		<result property="wtype" column="wtype"/>
+		<result property="wabout" column="wabout"/>
+		<result property="wrednum" column="wrednum"/>
+		<association property="type" column="type" javaType="com.soft.entity.Type">
+			<id property="typeid" column="typeid"/>
+			<result property="typename" column="typename" />
+			<result property="typejf" column="typejf" />
+		</association>
+		<association property="state" column="state" javaType="com.soft.entity.State">
+			<id property="stateid" column="stateid"/>
+			<result property="statename" column="statename" />
+		</association>
+	</resultMap>
+</mapper>
+
+
+	

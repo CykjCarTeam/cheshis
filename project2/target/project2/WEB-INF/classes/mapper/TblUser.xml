@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.mapper.UserMapper">
+<!--	查询用户列表-->
+	<select id="findUserAll" resultType="com.soft.entity.UserList">
+		select * from tbluser
+	</select>
+	<select id="loginUser" resultType="com.soft.entity.User">
+		select * from tbluser where  userid=#{userid} and userpwd=#{userpwd} and userstate=5
+	</select>
+	<insert id="addUser"  parameterType="com.soft.entity.User">
+		insert into tbluser (userid,userpwd,usersex,userxl,userjob,userphone,useraddress,usertime,userimage) values (#{userid},#{userpwd},#{usersex},#{userxl},#{userjob},#{userphone},#{useraddress},#{usertime},#{userimage})
+	</insert>
+
+	<select id="findUserByUserid" parameterType="java.lang.String" resultType="com.soft.entity.UserList">
+		select  * from  tbluser where  userid=#{userid}
+	</select>
+</mapper>
+
+
+	

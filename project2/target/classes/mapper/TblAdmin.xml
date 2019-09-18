@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.mapper.AdminMapper">
+    <select id="login" parameterType="com.soft.entity.Admin" resultType="com.soft.entity.Admin">
+    select * from tbladmin where adminid=#{adminid} and adminpwd=#{adminpwd}
+    </select>
+    <select id="finduserlist" parameterType="java.util.HashMap" resultType="com.soft.entity.UserList">
+        SELECT * from(SELECT u.userid,u.userxl,u.useraddress,u.userjf,u.userjob,u.userphone,u.userpwd,u.usersex,u.userstate,u.usertime,u.userdownnum,IFNULL(t1.userupnum,0) userupnum from tbluser u LEFT OUTER JOIN(select userid ,count(*) userupnum from tblmyword GROUP BY userid) t1 ON  u.userid=t1.userid )t,tblstate st
+        <where>
+            t.userstate=st.stateid
+            <if test="userid !=null and userid neq ''">
+                and userid like "%"#{userid}"%"
+            </if>
+            <if test=" (ftime !=null and ftime neq '') and ( ltime !=null and ltime neq '')">
+                and t.usertime between #{ftime} '00:00:00' and #{ltime} '24:00:00'
+            </if>
+        </where>
+        limit #{start},#{end}
+    </select>
+    <select id="finduserpage" parameterType="java.util.HashMap" resultType="com.soft.entity.UserList">
+        SELECT * from(SELECT u.userid,u.userxl,u.useraddress,u.userjf,u.userjob,u.userphone,u.userpwd,u.usersex,u.userstate,u.usertime,u.userdownnum,IFNULL(t1.userupnum,0) userupnum from tbluser u LEFT OUTER JOIN(select userid ,count(*) userupnum from tblmyword GROUP BY userid) t1 ON  u.userid=t1.userid )t,tblstate st
+        <where>
+            t.userstate=st.stateid
+            <if test="userid !=null and userid neq ''">
+                and userid like "%"#{userid}"%"
+            </if>
+            <if test=" (ftime !=null and ftime neq '') and ( ltime !=null and ltime neq '')">
+                and t.usertime between #{ftime} '00:00:00' and #{ltime} '24:00:00'
+            </if>
+        </where>
+    </select>
+    <select id="findwordlist" parameterType="java.util.HashMap" resultType="com.soft.entity.UserUp">
+        SELECT * from(SELECT u.userid,u.userxl,u.useraddress,u.userjf,u.userjob,u.userphone,u.userpwd,u.usersex,u.userstate,u.usertime,u.userdownnum,IFNULL(t1.userupnum,0) userupnum from tbluser u LEFT OUTER JOIN(select userid ,count(*) userupnum from tblmyword GROUP BY userid) t1 ON  u.userid=t1.userid )t,tblstate st
+        <where>
+            t.userstate=st.stateid
+            <if test="userid !=null and userid neq ''">
+                and userid like "%"#{userid}"%"
+            </if>
+            <if test=" (ftime !=null and ftime neq '') and ( ltime !=null and ltime neq '')">
+                and t.usertime between #{ftime} '00:00:00' and #{ltime} '24:00:00'
+            </if>
+        </where>
+        limit #{start},#{end}
+    </select>
+</mapper>
+
+	

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+        "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+    <package name="demo" namespace="/demo" extends="struts-default">
+        <action name="testaction" class="loginAction">
+            <result name="login">/adminjsp/login.jsp</result>
+            <result name="success">/adminjsp/index.jsp</result>
+            <!--<result name="success" type="chain">
+                <param name="actionName">testaction2</param>
+                <param name="namespace">/admingl</param>
+                <param name="method">find</param>
+            </result>-->
+        </action>
+    </package>
+    <package name="admin" namespace="/admin" extends="struts-default,json-default">
+        <action name="test" class="adminAction">
+            <!--            <result name="success">/adminjsp/member-list1.jsp</result>-->
+            <result name="table" type="json">
+                <param name="root">usermap</param>
+            </result>
+            <result name="wtable" type="json">
+                <param name="root">wordmap</param>
+            </result>
+        </action>
+    </package>
+    <package name="user" namespace="/user" extends="struts-default,json-default" >
+
+        <action name="ulogin" class="userLoginAction">
+            <result name="error">/userjsp/login.jsp</result>
+            <result name="success">/userjsp/index.jsp</result>
+        </action>
+        <action name="userc" class="userLoginAction">
+            <result name="ucheck" type="json">
+                <param name="root">msg</param>
+            </result>
+        </action>
+
+
+    </package>
+
+    <package name="upfile" namespace="/upfile" extends="struts-default" >
+        <interceptors >
+            <interceptor  name="first" class="com.soft.interceptors.Interceptors"></interceptor>
+        </interceptors >
+        <default-interceptor-ref name="first"></default-interceptor-ref>
+        <global-results>
+            <result name="no">/userjsp/res.jsp</result>
+        </global-results>
+        <action name="uploads" class="com.soft.web.UploadAction" >
+            <result name="ok">/userjsp/login.jsp</result>
+            <result name="no">/userjsp/res.jsp</result>
+            <interceptor-ref name="defaultStack" >
+                <param name="fileUpload.maximumSize">10240000</param>
+                <param name="fileUpload.allowedTypes"> image/bmp,image/png,image/gif,image/jpeg,image/jpg,
+                    image/pjpeg , image/x-png</param>
+                <param name="fileUpload.allowedExtensions">.jpg,.png,.pjpeg,.gif,.image,.bmp,.jpeg</param>
+            </interceptor-ref>
+        </action>
+    </package>
+</struts>
